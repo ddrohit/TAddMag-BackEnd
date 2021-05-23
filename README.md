@@ -27,5 +27,6 @@ Node-express,Psql.
 <ol>
     <li>[Postgres Reference](https://node-postgres.com/features/connecting)</li>
     <li>[Project Reference](https://github.com/iamsrujal/nodejs-file-stucture-express)</li>
+    <li>[Project Explanation](https://dev.to/iamsrujal/nodejs-express-project-structure-for-rest-api-37oa)</li>
 </ol>
 

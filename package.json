@@ -1,0 +1,23 @@
+{
+  "name": "taddmag-backend",
+  "version": "1.0.0",
+  "description": "Updated Backend According To The Latest Changes In The TAddMag Project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InnovativeWhales/TAddMag-BackEnd.git"
+  },
+  "author": "InnovativeWhales",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/InnovativeWhales/TAddMag-BackEnd/issues"
+  },
+  "homepage": "https://github.com/InnovativeWhales/TAddMag-BackEnd#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

@@ -6,7 +6,16 @@ Tech Usage.
 Node-express,Psql.
 
 # Api Documentation
-
+<details>
+    <summary>Admin</summary>
+    <br>
+    This Section Is For Admin.
+    <details>
+        <summary>Deep Inside</summary>
+        <br>
+        This is deep inside one.
+    </details>
+</details>
 
 # Versions
 | Tech / Module  |  Version  |

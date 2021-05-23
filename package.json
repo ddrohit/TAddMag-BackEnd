@@ -4,8 +4,9 @@
   "description": "Updated Backend According To The Latest Changes In The TAddMag Project.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified Here\" && exit 1",
+    "start": "node src\\server.js",
+    "dev": "nodemon src\\server.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,12 @@
   },
   "homepage": "https://github.com/InnovativeWhales/TAddMag-BackEnd#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "chalk": "^4.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "glob": "^7.1.7",
+    "nodemon": "^2.0.7",
+    "pg": "^8.6.0"
   }
 }

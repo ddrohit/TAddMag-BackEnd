@@ -13,11 +13,11 @@ Node-express,Psql.
     <details>
         <summary>Login</summary>
         <br>
-        | Hello|sadsd|
-        |----------|---------|
-        |     Call       |  Post          |
-        |      Api       | /Admin/Login   |
-        |   Response     | <code>{}</code>|
+        # Versions
+        | Tech / Module  |  Version  |
+        | -------------  | ------------- |
+        |    NodeJs      | 10.16.1       |
+        |   PostgreSQL   | 12.3          |
     </details>
 </details>
 

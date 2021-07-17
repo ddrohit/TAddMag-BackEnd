@@ -13,10 +13,11 @@ Node-express,Psql.
     <details>
         <summary>Login</summary>
         <br>
-        First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
+# Versions
+| Tech / Module  |  Version  |
+| -------------  | ------------- |
+|    NodeJs      | 10.16.1       |
+|   PostgreSQL   | 12.3          |
     </details>
 </details>
 

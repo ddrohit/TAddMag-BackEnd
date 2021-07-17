@@ -13,10 +13,10 @@ Node-express,Psql.
     <details>
         <summary>Login</summary>
         <br>
-        <table>
-            <tr>Rohit</tr>
-            <tr>This</tr>
-        </table>
+        First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
     </details>
 </details>
 

@@ -8,18 +8,16 @@ Node-express,Psql.
 # Api Documentation
 <details>
   <summary>Admin</summary>
-    
-    ## Admin Api calls
-    * Rohit
-    * King
-    
+  ## Admin Api calls
+  * Rohit
+  * King  
     <details>
         <summary>Login</summary>
         
         * With some
         * Sub bullets
     </details>
-    
+  
 </details>
 
 # A collapsible section with markdown

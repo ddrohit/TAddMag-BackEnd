@@ -8,10 +8,11 @@ Node-express,Psql.
 # Api Documentation
 <details>
     <summary>Admin</summary>
-    <br>
+    
     Admin Api calls
     <details>
         <summary>Login</summary>
+        
         * With some
         * Sub bullets
     </details>

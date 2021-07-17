@@ -9,12 +9,14 @@ Node-express,Psql.
 <details>
     <summary>Admin</summary>
     
-    Admin Api calls
+    ##Admin Api calls
+    
+    *
     <details>
         <summary>Login</summary>
         
-        - With some
-        - Sub bullets
+        * With some
+        * Sub bullets
     </details>
 </details>
 

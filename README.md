@@ -8,6 +8,7 @@ Node-express,Psql.
 # Api Documentation
 <details>
   <summary>Admin</summary>
+  
   ## Admin Api calls
   * Rohit
   * King  

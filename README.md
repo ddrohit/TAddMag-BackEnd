@@ -13,10 +13,9 @@ Node-express,Psql.
   * Rohit
   * King  
     <details>
-        <summary>Login</summary>
-        
-        * With some
-        * Sub bullets
+     <summary>Login</summary>
+      * With some
+      * Sub bullets
     </details>
   
 </details>

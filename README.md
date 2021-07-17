@@ -12,9 +12,8 @@ Node-express,Psql.
     Admin Api calls
     <details>
         <summary>Login</summary>
-        <br>
-        -Rohit
-        -King
+        * With some
+        * Sub bullets
     </details>
 </details>
 

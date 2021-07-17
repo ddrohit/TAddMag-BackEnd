@@ -13,8 +13,8 @@ Node-express,Psql.
     <details>
         <summary>Login</summary>
         
-        * With some
-        * Sub bullets
+        - With some
+        - Sub bullets
     </details>
 </details>
 

@@ -9,11 +9,13 @@ Node-express,Psql.
 <details>
     <summary>Admin</summary>
     <br>
-    This Section Is For Admin.
+    Admin Api calls
     <details>
-        <summary>Deep Inside</summary>
+        <summary>Login</summary>
         <br>
-        This is deep inside one.
+        |     Call       |  Post          |
+        |      Api       | /Admin/Login   |
+        |   Response     | <code>{}</code>|
     </details>
 </details>
 

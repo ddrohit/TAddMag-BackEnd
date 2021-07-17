@@ -13,11 +13,8 @@ Node-express,Psql.
     <details>
         <summary>Login</summary>
         <br>
-# Versions
-| Tech / Module  |  Version  |
-| -------------  | ------------- |
-|    NodeJs      | 10.16.1       |
-|   PostgreSQL   | 12.3          |
+        -Rohit
+        -King
     </details>
 </details>
 

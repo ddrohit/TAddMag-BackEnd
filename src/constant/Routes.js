@@ -1,3 +1,4 @@
 module.exports = {
-    Main: '/'
+    Main: '/',
+    Admin:'/Admin'
   }

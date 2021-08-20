@@ -6,16 +6,7 @@ Tech Usage.
 Node-express,Psql.
 
 # Api Documentation
-<details>
-    <summary>Admin</summary>
-    <br>
-    This Section Is For Admin.
-    <details>
-        <summary>Deep Inside</summary>
-        <br>
-        This is deep inside one.
-    </details>
-</details>
+
 
 # Versions
 | Tech / Module  |  Version  |
@@ -30,3 +21,6 @@ Node-express,Psql.
     <li>[Project Explanation](https://dev.to/iamsrujal/nodejs-express-project-structure-for-rest-api-37oa)</li>
 </ol>
 
+# Basic Flow
+
+Register -> verify mobile -> Cash or online -> Try to register -> if any refral codes use it -> Sucessfull registration

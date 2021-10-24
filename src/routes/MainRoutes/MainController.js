@@ -19,7 +19,6 @@ module.exports = {
 
     //Controller For User Registration
 	Register: async (req,res) =>{
-
 		//Check for valid params
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -29,6 +28,7 @@ module.exports = {
 
         // Getting the Request Body
         const body = req.body;
+        
         let transaction_id;
 		try{
             //Creating a CashPayment Option
@@ -53,11 +53,11 @@ module.exports = {
             let referalcode = "TG"+d.getFullYear()+(parseInt(count)+1);
             
             let result = await db.query(
-                `INSERT INTO taddmagusers (user_id,first_name, mobile_number, mobile_verified, kyc_status, age, address, city, state, pincode, pancard, aadhar, bank_name, account_number, refferedby, payment_id, password, level,referalcode) 
-                 VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING user_id`,
-                 [parseInt(count)+1,body["first_name"],body["mobile_number"],true,false,body["age"],body["address"],body["city"],body["state"],body["pincode"],body["pancard"],body["aadhar"],body["bank_name"],body["account_number"],body["refferedby"],transaction_id,hashedPassword,1,referalcode]
+                `INSERT INTO taddmagusers (user_id,first_name, mobile_number, mobile_verified, kyc_status, dateofbirth, age, address, city, district, state, pincode, pancard, aadhar, bank_name, account_number, refferedby, payment_id, password, level,referalcode) 
+                 VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21) RETURNING user_id`,
+                 [parseInt(count)+1,body["first_name"],body["mobile_number"],true,false,body["dateofbirth"],body["age"],body["address"],body["city"],body["district"],body["state"],body["pincode"],body["pancard"],body["aadhar"],body["bank_name"],body["account_number"],body["refferedby"],transaction_id,hashedPassword,1,referalcode]
             )
-            if(body["refferedby"] != null&&body["refferedby"] != "")
+            if(body["refferedby"] != null && body["refferedby"] != "")
              result = await db.query(
                 `UPDATE taddmagusers SET no_of_referals = no_of_referals + 1 WHERE referalcode = $1;`,
                  [body["refferedby"]]
@@ -99,12 +99,44 @@ module.exports = {
         res.end();
     },
 
+    //Login into the app
     Login: async (req,res)=>{
 
+        //Checking the username and password are passed into the request
         const errors = validationResult(req);
           if (!errors.isEmpty()) {
               console.log(errors)
-              return res.status(422).send(reqResponse.errorResponse(422,"Invalid Data Passed",errors));
+              return res.status(422).send(reqResponse.errorResponse("Error","Invalid Data Passed",errors));
+          }
+
+          //If username and password is for admin
+         else if(req.body.mobile_number === config.AdminMobile && req.body.password === config.AdminPassword)
+         {
+            var token = jwt.sign({ Role:"Admin" }, config.ScrectKey, {
+                expiresIn: 86400 // expires in 24 hours
+            });
+            res.send(reqResponse.successResponse("Sucess","Login Sucessfull",{jwt:token})).end();
+         }  
+         //If the username and password is for user
+         else
+         {
+            var data = await db.query(`SELECT password FROM taddmagusers WHERE mobile_number = $1;`,[req.body.mobile_number])
+            if(data.rowCount > 0)
+            {
+                if(bcrypt.compareSync(req.body.password,data.rows[0].password))
+                    res.send(reqResponse.successResponse("Sucess","Login Sucessfull",{})).end();
+                else
+                    res.send(reqResponse.successResponse("Error","Invalid Login credentials",{})).end();
+            }
+         }
+    },
+
+
+    VerifyOtp: async(req,res) =>{
+        const errors = validationResult(req);
+          if (!errors.isEmpty()) {
+              console.log(errors)
+              return res.status(422).send(reqResponse.errorResponse("Error","Invalid Data Passed",errors));
           }
 
           //If username and password is for admin
@@ -113,10 +145,9 @@ module.exports = {
             var token = jwt.sign({ Role:"Admin" }, config.ScrectKey, {
                 expiresIn: 86400 // expires in 24 hours
             });
-            res.send(reqResponse.successResponse(200,"Login Sucessfull",{jwt:token})).end();
+            res.send(reqResponse.successResponse("Sucess","Login Sucessfull",{jwt:token})).end();
          }  
          else
-            res.send(reqResponse.successResponse(200,"Invalid Login credentials",{})).end();
-      },
-
+            res.send(reqResponse.successResponse("Error","Invalid Login credentials",{})).end();
+    }
 }

@@ -20,8 +20,12 @@ module.exports = (app) => {
 
   router.route('/SendOtp').post();
 
-  router.route("/VerifyOtp").post();
-
+  /*
+  router.route("/VerifyOtp").post(
+    Validation.VerifyOtp(),
+    MainControler.VerifyOtp
+  );
+*/
   router.route("/VerifyOnlinePayment").post();
 
   //For User Login

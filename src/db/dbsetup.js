@@ -25,6 +25,7 @@ module.exports = {
                     mobile_number varchar(12) NOT NULL UNIQUE,
                     mobile_verified BOOLEAN DEFAULT FALSE NOT NULL,
                     kyc_status BOOLEAN DEFAULT FALSE NOT NULL,  
+                    dateofbirth DATE NOT NULL, 
                     age INTEGER NOT NULL,
                     address varchar(100) NOT NULL,
                     city varchar(30) NOT NULL,

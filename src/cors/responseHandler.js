@@ -34,6 +34,15 @@ let errorResponse = (statusCode,failmessage,data) => {
 			data
 		}
 	}
+
+	if(statusCode == 500)
+	{
+		return {
+			message:failmessage,
+			data
+		}
+	}
+
 	return findErrorMessage(statusCode);
 }
 

@@ -21,17 +21,14 @@ module.exports = {
                 data = await db.query(`CREATE TABLE IF NOT EXISTS taddmagusers (
 
                     user_id BIGSERIAL PRIMARY KEY,
-                    first_name varchar(45) NOT NULL,
+                    fullname varchar(45) NOT NULL,
                     mobile_number varchar(12) NOT NULL UNIQUE,
                     mobile_verified BOOLEAN DEFAULT FALSE NOT NULL,
                     kyc_status BOOLEAN DEFAULT FALSE NOT NULL,  
                     dateofbirth DATE NOT NULL, 
-                    age INTEGER NOT NULL,
                     address varchar(100) NOT NULL,
-                    city varchar(30) NOT NULL,
                     district varchar(30) NOT NULL,
                     state varchar(30) NOT NULL,
-                    pincode varchar(20) NOT NULL,
                     pancard varchar(20),
                     pancard_doc varchar(30),
                     aadhar varchar(20),

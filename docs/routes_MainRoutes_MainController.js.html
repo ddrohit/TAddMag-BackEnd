@@ -1,4 +1,32 @@
-const PaymentService = require('../../services/PaymentService');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routes/MainRoutes/MainController.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routes/MainRoutes/MainController.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const PaymentService = require('../../services/PaymentService');
 const NetworkService = require('../../services/NetworkService');
 const MainService = require('../../services/MainService');
 const reqResponse = require('../../cors/responseHandler');
@@ -48,11 +76,11 @@ module.exports = {
 		try{
             //Creating a CashPayment Option
             if(body["transaction_id"] == null || body["transaction_id"] == undefined)
-                transaction_id = await PaymentService.CreateCashPayment({Amount:500*100,type:"Credit",description:"For User Registration Admin",currency:"INR"});
+                transaction_id = await PaymentService.CreateCashPayment({Amount:5000,type:"Credit",description:"For User Registration Admin",currency:"INR"});
             else
                 transaction_id = body['transaction_id'];
             //Verifying Referal code
-            if(body["refferedby"] != null && body["refferedby"] != ""){
+            if(body["refferedby"] != null&amp;&amp;body["refferedby"] != ""){
                 const result = await db.query(
                     `SELECT * from taddmagusers WHERE referalcode = $1;`,
                     [body["refferedby"]]
@@ -67,14 +95,14 @@ module.exports = {
 
             const hashedPassword = bcrypt.hashSync(body["password"], saltRounds);
             var d = new Date();
-            let referalcode = "TG"+d.getFullYear()+(parseInt(count)+1); 
+            let referalcode = "TG"+d.getFullYear()+(parseInt(count)+1);
             
             let result = await db.query(
-                `INSERT INTO taddmagusers (user_id,fullname, mobile_number, gender, mobile_verified, kyc_status, dateofbirth, address, district, state, pancard, aadhar, bank_name, account_number, refferedby, payment_id, password, level,referalcode,money_spent) 
-                 VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING user_id`,
-                 [parseInt(count)+1,body["fullname"],body["mobile_number"],body["gender"],true,false,body["dateofbirth"],body["address"],body["district"],body["state"],body["pancard"],body["aadhar"],body["bank_name"],body["account_number"],body["refferedby"],transaction_id,hashedPassword,1,referalcode,500*100]
+                `INSERT INTO taddmagusers (user_id,fullname, mobile_number, mobile_verified, kyc_status, dateofbirth, address, district, state, pancard, aadhar, bank_name, account_number, refferedby, payment_id, password, level,referalcode) 
+                 VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING user_id`,
+                 [parseInt(count)+1,body["fullname"],body["mobile_number"],true,false,body["dateofbirth"],body["address"],body["district"],body["state"],body["pancard"],body["aadhar"],body["bank_name"],body["account_number"],body["refferedby"],transaction_id,hashedPassword,1,referalcode]
             )
-            if(body["refferedby"] != null && body["refferedby"] != "")
+            if(body["refferedby"] != null &amp;&amp; body["refferedby"] != "")
              result = await db.query(
                 `UPDATE taddmagusers SET no_of_referals = no_of_referals + 1 WHERE referalcode = $1;`,
                  [body["refferedby"]]
@@ -117,7 +145,7 @@ module.exports = {
           }
 
           //If username and password is for admin
-         else if(req.body.mobile_number === config.AdminMobile && req.body.password === config.AdminPassword)
+         else if(req.body.mobile_number === config.AdminMobile &amp;&amp; req.body.password === config.AdminPassword)
          {
             var token = jwt.sign({ Role:"Admin" }, config.ScrectKey, {
                 expiresIn: 86400 // expires in 24 hours
@@ -141,33 +169,16 @@ module.exports = {
     SendOtp :async(req,res)=>{
         //Checking the mobilenumber are passed into the request
         const errors = validationResult(req);
-        try{
-        if (!errors.isEmpty()) {
-            console.log(errors)
-            return res.status(422).send(reqResponse.errorResponse("Error","Invalid Data Passed",{error:errors}));
-        }
-        else
-        {
-            var result = await db.query(
-                `Select mobile_number from taddmagusers Where mobile_number = $1`,
-                 [req.body.mobile_number]
-            );
-            if(result.rows.length !== 0 )
-            {
-                return res.status(200).send(reqResponse.successResponse("Error","Mobile Number already Registred",{}));
-            }
-            else
-            {
-                //hashing the Otp
-                var token = jwt.sign({ otp:"9999", mobile_number:req.body.mobile_number }, config.ScrectKey, {
-                    expiresIn: "150s" // expires in 24 hours
-                });
+          if (!errors.isEmpty()) {
+              console.log(errors)
+              return res.status(422).send(reqResponse.errorResponse("Error","Invalid Data Passed",{error:errors}));
+          }
+        //hashing the Otp
+        var token = jwt.sign({ otp:"9999", mobile_number:req.body.mobile_number }, config.ScrectKey, {
+            expiresIn: "150s" // expires in 24 hours
+        });
 
-                res.status(200).send(reqResponse.successResponse("Sucess","Otp Sent Sucessfully",{jwt:token})).end();
-                }
-            }
-        }
-        catch(e){console.log(e);}
+        res.status(200).send(reqResponse.successResponse("Sucess","Otp Sent Sucessfully",{jwt:token})).end();
     },
 
     VerifyOtp: async(req,res) =>{
@@ -259,16 +270,27 @@ module.exports = {
             console.log(err);
             return res.status(400).send(reqResponse.errorResponse(400,"Internal Error",err));
         }
-    },
-
-    verifyrefferalcode: async(req,res)=>{
-        const result = await db.query(
-            `SELECT referalcode from taddmagusers WHERE referalcode = $1;`,
-            [req.body["referalcode"]]
-        );
-        if(result.rows.length !== 0)
-            res.status(200).send(reqResponse.successResponse(200,"Valid Referal",{validreferal:true}));
-        else
-            res.status(200).send(reqResponse.successResponse(200,"Invalid Referal Code",{validreferal:false}));
     }
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-db.html">db</a></li><li><a href="module-GeneralFunctions.html">GeneralFunctions</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Fri Dec 17 2021 18:47:06 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

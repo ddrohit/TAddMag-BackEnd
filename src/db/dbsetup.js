@@ -8,11 +8,13 @@ module.exports = {
                 data = await db.query(`CREATE TABLE IF NOT EXISTS taddmagtrans (
                     trans_id BIGSERIAL PRIMARY KEY,
                     amount NUMERIC NOT NULL,
+                    receipt_id varchar(40) NOT NULL,
+                    currency varchar(6) NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
                     mode varchar(25) NOT NULL,
                     status varchar(25) NOT NULL,
                     raz_payment_id varchar(70) ,
-                    raz_oder_id varchar(70),
+                    raz_order_id varchar(70),
                     by_user_id INTEGER,
                     type varchar(15) NOT NULL,
                     description varchar(70) NOT NULL
@@ -25,6 +27,7 @@ module.exports = {
                     mobile_number varchar(12) NOT NULL UNIQUE,
                     mobile_verified BOOLEAN DEFAULT FALSE NOT NULL,
                     kyc_status BOOLEAN DEFAULT FALSE NOT NULL,  
+                    gender varchar(100) NOT NULL,
                     dateofbirth DATE NOT NULL, 
                     address varchar(100) NOT NULL,
                     district varchar(30) NOT NULL,
@@ -43,7 +46,7 @@ module.exports = {
                     password varchar(450) NOT NULL,
                     level integer NOT NULL DEFAULT 1 NOT NULL,
                     money_earned NUMERIC NOT NULL DEFAULT 0 NOT NULL,
-                    money_spent NUMERIC NOT NULL DEFAULT 500 NOT NULL,
+                    money_spent NUMERIC NOT NULL DEFAULT 0 NOT NULL,
                     no_of_referals integer NOT NULL DEFAULT 0 NOT NULL,
                     registred_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
                 )`);

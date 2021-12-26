@@ -1,3 +1,5 @@
+//* */
+
 const router = require('express').Router();
 const MainControler = require('./MainController');
 const crypto = require('crypto');
@@ -22,9 +24,6 @@ module.exports = (app) => {router.route('/').get( MainControler.SendMain);
   //For Otp
   router.route('/VerifyOtp').post(Validation.VerifyOtp(),MainControler.VerifyOtp);
 
-  //For Verifing online payment
-  router.route("/VerifyOnlinePayment").post();
-
   //For User Login
   router.route('/Login').post(Validation.Login(),MainControler.Login);
 
@@ -32,16 +31,10 @@ module.exports = (app) => {router.route('/').get( MainControler.SendMain);
   router.route('/CreateOrder').post(Validation.Createorder(),MainControler.CreateOrder)
 
   //Veriding and capturing the payment
-  router.route('/VerifyPayment').post(async function(req,res){
-    const { orderID, transaction } = req.body;
+  router.route('/VerifyPayment').post(Validation.verifyPayment(),MainControler.VerifyPayment)
 
-    const generatedSignature = crypto
-      .createHmac("sha256", process.env.SECRETKEY)
-      .update(`${orderID}|${transaction.razorpay_payment_id}`)
-      .digest("hex");
-
-    res.send({ validSignature: generatedSignature === transaction.razorpay_signature });
-  })
+  //verifing the referal code
+  router.route('/VerifyReferal').post(Validation.verifyrefferalcode(),MainControler.verifyrefferalcode)
 
   app.use(RouteConstant.Main,router);
 };

@@ -2,9 +2,18 @@ const { Pool } = require('pg');
 
 var pool = null;
 
-
+/**
+ * A module that says hello!
+ * @module db
+ */
 module.exports = {
-    query: (text, params) => pool.query(text, params),
+    /**
+     * 
+     * @param {String} query 
+     * @param {String} params 
+     * @returns {Promise} pollquery
+     */
+    query: (query, params) => pool.query(query, params),
     connect: async ({user,host,database,password,port})=> {
         return new Promise(async (resolve,reject)=>{
             pool = new Pool({

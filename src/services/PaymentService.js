@@ -5,8 +5,9 @@ module.exports = {
           try{
             let trans = await db.query(`SELECT MAX(trans_id) FROM taddmagtrans`);
             let count = trans.rows[0].max == null?  0: trans.rows[0].max;
-            data = await db.query('INSERT into taddmagtrans (trans_id, amount, mode, status, type, description, currency) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING trans_id', 
-            [parseInt(count)+1,Amount, "Cash","Sucessfull",type,description,currency]);
+            const receipt_id = "REG-"+Date.now()
+            data = await db.query('INSERT into taddmagtrans (trans_id, amount, mode, status, type, description, currency, receipt_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING trans_id', 
+            [parseInt(count)+1,Amount, "Cash","Sucessfull",type,description,currency,receipt_id]);
             if(data.rows.length == 0)
                 throw new Exception("no trasid is returned")
             else
@@ -36,13 +37,13 @@ module.exports = {
           
         });
       },
-  CreateRazorPayPayment: async ({Amount,type,description,currency,orderid}) => {
+  CreateRazorPayPayment: async ({Amount,type,description,currency,orderid,receipt_id}) => {
       return new Promise(async (resolve, reject) => {
           try{
             let trans = await db.query(`SELECT MAX(trans_id) FROM taddmagtrans`);
             let count = trans.rows[0].max == null?  0: trans.rows[0].max;
-            data = await db.query('INSERT into taddmagtrans (trans_id, amount, mode, status, type, description, currency, raz_oder_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING trans_id', 
-            [parseInt(count)+1,Amount, "Online","Created",type,description,currency,orderid]);
+            data = await db.query('INSERT into taddmagtrans (trans_id, amount,receipt_id, mode, status, type, description, currency, raz_order_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING trans_id', 
+            [parseInt(count)+1,Amount,receipt_id, "Online","Created",type,description,currency,orderid]);
             if(data.rows.length == 0)
                 throw new Exception("no trasid is returned")
             else
@@ -50,8 +51,32 @@ module.exports = {
           }
           catch(error){
               console.log(error);
-              reject("tranfaction failed");
+              reject("transaction failed");
           }
       });
-    }
+    },
+  PaymentSucessfull : async({orderid,razorpay_trans_id}) =>{
+    return new Promise(async (resolve, reject) => {
+        try{
+              data = await db.query('UPDATE taddmagtrans SET raz_payment_id = $1, status =$2 Where raz_order_id = $3', [razorpay_trans_id,"Paid",orderid])
+              resolve("Sucesfully updated staus");
+        }
+        catch(err){
+            console.log(err);
+            reject("Faild Updating status")
+        }
+      });
+  },
+  PaymentFailure: async({orderid})=>{
+    return new Promise(async (resolve, reject) => {
+      try{
+            data = await db.query('UPDATE taddmagtrans SET raz_payment_id =$1, status = $2 Where raz_order_id = $3', [razorpay_trans_id,"Signature Failed",orderid])
+            resolve("Sucesfully updated staus");
+      }
+      catch(err){
+          console.log(err);
+          reject("Faild Updating status")
+      }
+    });
+  }
 }

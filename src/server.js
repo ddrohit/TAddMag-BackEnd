@@ -15,6 +15,14 @@ app.use(express.urlencoded({
 }));
 
 
+/**
+ * @name Telangana_Ad_Mag
+ * @file This is the Starting point
+ * @author Rohit Dasamantharao
+ * @version 1
+ */
+
+
 require('./routes')(app);
 const dir = path.join(__dirname, 'static');
 app.use('/static', express.static(dir));

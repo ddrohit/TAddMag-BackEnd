@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified Here\" && exit 1",
     "start": "node src\\server.js",
-    "dev": "nodemon src\\server.js"
+    "dev": "nodemon src\\server.js",
+    "gendoc": "jsdoc -c jsdocsconfig.json"
   },
   "repository": {
     "type": "git",

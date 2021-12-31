@@ -56,5 +56,15 @@ module.exports = {
     return [
       check("referal").not().isEmpty().withMessage('referal code is Mandatory'),
     ]
+  },
+  getUsers:()=>{
+    return[
+      check("query").not().isEmpty().withMessage('query is Mandatory')
+    ]
+  },
+  getUserDetails:()=>{
+    return[
+      check("id").not().isEmpty().withMessage('id is Mandatory')
+    ]
   }
 }

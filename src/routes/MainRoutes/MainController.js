@@ -115,8 +115,7 @@ module.exports = {
               console.log(errors)
               return res.status(422).send(reqResponse.errorResponse("Error","Invalid Data Passed",errors));
           }
-
-          //If username and password is for admin
+        //If username and password is for admin
          else if(req.body.mobile_number === config.AdminMobile && req.body.password === config.AdminPassword)
          {
             var token = jwt.sign({ Role:"Admin" }, config.ScrectKey, {
@@ -131,7 +130,10 @@ module.exports = {
             if(data.rowCount > 0)
             {
                 if(bcrypt.compareSync(req.body.password,data.rows[0].password))
-                    res.send(reqResponse.successResponse("Sucess","Login Sucessfull",{})).end();
+                {
+                    var token = jwt.sign({ Role:"User" }, config.ScrectKey);
+                    res.send(reqResponse.successResponse("Sucess","Login Sucessfull",{jwt:token})).end();
+                }
                 else
                     res.send(reqResponse.successResponse("Error","Invalid Login credentials",{})).end();
             }

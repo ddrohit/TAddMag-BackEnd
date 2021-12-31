@@ -6,10 +6,15 @@ const RouteConstant = require('../../constant/Routes');
 const Validation = require('../../validation/UserValidation');
 
 module.exports = (app) => {
-    router.route('/Login')
-    .get(
-      Validation.Login(),
-      AdminController.Login
+    router.route('/GetUsers')
+    .post(
+      Validation.getUsers(),
+      AdminController.getUsers
+    );
+    router.route('/GetUserDetails')
+    .post(
+      Validation.getUserDetails(),
+      AdminController.getUserDetails
     );
     app.use(
       RouteConstant.Admin,

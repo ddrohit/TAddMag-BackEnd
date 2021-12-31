@@ -1,8 +1,8 @@
 require('dotenv').config()
 const express = require('express')
 const chalk = require('chalk');
-const db = require("./db");
-const dbsetup = require("./db/dbsetup")
+const db = require("./src/db");
+const dbsetup = require("./src/db/dbsetup")
 const path = require('path');
 const app = express();
 const cors = require('cors');
@@ -23,10 +23,10 @@ app.use(express.urlencoded({
  */
 
 
-require('./routes')(app);
+require('./src/routes')(app);
 const dir = path.join(__dirname, 'static');
 app.use('/static', express.static(dir));
-app.use(require("./cors/middleware").checkToken);
+app.use(require("./src/cors/middleware").checkToken);
 
 //Starting The Whole App
 (async ()=>{

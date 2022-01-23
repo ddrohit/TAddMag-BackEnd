@@ -126,12 +126,12 @@ module.exports = {
          //If the username and password is for user
          else
          {
-            var data = await db.query(`SELECT password FROM taddmagusers WHERE mobile_number = $1;`,[req.body.mobile_number])
+            var data = await db.query(`SELECT password,user_id FROM taddmagusers WHERE mobile_number = $1;`,[req.body.mobile_number])
             if(data.rowCount > 0)
             {
                 if(bcrypt.compareSync(req.body.password,data.rows[0].password))
                 {
-                    var token = jwt.sign({ Role:"User" }, config.ScrectKey);
+                    var token = jwt.sign({ Role:"User", user_id:data.rows[0].user_id }, config.ScrectKey);
                     res.send(reqResponse.successResponse("Sucess","Login Sucessfull",{jwt:token})).end();
                 }
                 else

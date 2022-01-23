@@ -26,7 +26,6 @@ app.use(express.urlencoded({
 require('./src/routes')(app);
 const dir = path.join(__dirname, 'static');
 app.use('/static', express.static(dir));
-app.use(require("./src/cors/middleware").checkToken);
 
 //Starting The Whole App
 (async ()=>{

@@ -10,13 +10,14 @@ const saltRounds = 10;
 const jwt = require("jsonwebtoken")
 
 module.exports = {
-    Login: async (req, res) => {
-        const body = req.body;
-        if(body["mobileno"] === config.AdminMobile && body["password"] === config.AdminPassword){
-            res.status(200).send(reqResponse.successResponse(200,"Login Sucessfull",{}));
-        }
-        else{
-            res.status(401).send(reqResponse.successResponse(401,"Invalid credentials",{}))
+    getUserDetails: async (req,res)=>{
+        const id = req.decoded.user_id;
+            try{
+                const result = await db.query("SELECT fullname, level, refferedby, address, dateofbirth, mobile_number, no_of_referals, registred_on, referalcode FROM taddmagusers WHERE user_id = $1",[id]);
+                res.send(reqResponse.successResponse("Sucess","Retrive Data Sucessfull",{rows:result.rows})).end();
+            }
+        catch(error){
+            res.send(reqResponse.errorResponse(422,"Required data not supplied",{}))
         }
     }
 }

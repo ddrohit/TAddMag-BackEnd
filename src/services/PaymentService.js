@@ -7,7 +7,7 @@ module.exports = {
             let count = trans.rows[0].max == null?  0: trans.rows[0].max;
             const receipt_id = "REG-"+Date.now()
             data = await db.query('INSERT into taddmagtrans (trans_id, amount, mode, status, type, description, currency, receipt_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING trans_id', 
-            [parseInt(count)+1,Amount, "Cash","Sucessfull",type,description,currency,receipt_id]);
+            [parseInt(count)+1,Amount, "Cash","Paid",type,description,currency,receipt_id]);
             if(data.rows.length == 0)
                 throw new Exception("no trasid is returned")
             else

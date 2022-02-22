@@ -57,7 +57,13 @@ module.exports = {
       check("referal").not().isEmpty().withMessage('referal code is Mandatory'),
     ]
   },
+  //Admin Validations
   getUsers:()=>{
+    return[
+      check("query").not().isEmpty().withMessage('query is Mandatory')
+    ]
+  },
+  getPayments:()=>{
     return[
       check("query").not().isEmpty().withMessage('query is Mandatory')
     ]
@@ -66,5 +72,8 @@ module.exports = {
     return[
       check("id").not().isEmpty().withMessage('id is Mandatory')
     ]
+  },
+  getStatistics:()=>{
+    return[]
   }
 }

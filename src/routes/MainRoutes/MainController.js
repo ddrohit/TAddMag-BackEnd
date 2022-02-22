@@ -47,10 +47,31 @@ module.exports = {
         let transaction_id;
 		try{
             //Creating a CashPayment Option
-            if(body["transaction_id"] == null || body["transaction_id"] == undefined)
-                transaction_id = await PaymentService.CreateCashPayment({Amount:500*100,type:"Credit",description:"For User Registration Admin",currency:"INR"});
-            else
+            if((body["transaction_id"] ? true : false) && (req.headers['x-access-token'] || req.headers['authorization'] ? true : false))
+            {
+                let token = req.headers['x-access-token'] || req.headers['authorization'];
+                if (token) {
+                  token = token.split(" ")
+                  if(token.length == 2)
+                    token = token[1];
+                  else
+                    token = "";
+                  jwt.verify(token, config.ScrectKey, async (err, decoded) =>  {
+                    if (err) {
+                      return res.status(403).send(reqResponse.errorResponse(403));
+                    } else {
+                      req.decoded = decoded;
+                      transaction_id = await PaymentService.CreateCashPayment({Amount:500*100,type:"Credit",description:"For User Registration Admin",currency:"INR"});
+                    }
+                  });
+                } else {
+                  return res.status(403).send(reqResponse.errorResponse(403)).end();
+                }
+            }
+            if(body['transaction_id'] ? true : false)
                 transaction_id = body['transaction_id'];
+            else
+                return res.status(401).send(reqResponse.errorResponse(403)).end();
             //Verifying Referal code
             if(body["refferedby"] != null && body["refferedby"] != ""){
                 const result = await db.query(
@@ -137,6 +158,8 @@ module.exports = {
                 else
                     res.send(reqResponse.successResponse("Error","Invalid Login credentials",{})).end();
             }
+            else
+            res.send(reqResponse.successResponse("Error","Invalid Login credentials",{})).end(); 
          }
     },
 
